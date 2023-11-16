@@ -2,6 +2,7 @@ package easv.mrs.GUI.Controller;
 
 import easv.mrs.BE.Movie;
 import easv.mrs.GUI.Model.MovieModel;
+import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ListView;
@@ -54,5 +55,11 @@ public class MovieViewController implements Initializable {
     }
 
 
+    public void onActionCreateNewMovie(ActionEvent actionEvent) {
 
+    }
+
+    public void onActionDeleteMovie(ActionEvent actionEvent) {
+
+    }
 }

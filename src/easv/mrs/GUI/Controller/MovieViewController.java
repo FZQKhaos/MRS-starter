@@ -73,7 +73,12 @@ public class MovieViewController implements Initializable {
         }
     }
 
-    public void onActionDeleteMovie(ActionEvent actionEvent) {
+    public void onActionDeleteMovie(ActionEvent actionEvent) throws Exception {
+        Movie selectedMovie = lstMovies.getSelectionModel().getSelectedItem();
+
+        if (selectedMovie != null){
+            movieModel.deleteMovie(selectedMovie);
+        }
 
     }
 }

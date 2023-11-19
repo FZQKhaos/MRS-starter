@@ -35,4 +35,8 @@ public class MovieModel {
             Movie m = movieManager.createNewMovie(newMovie);
             moviesToBeViewed.add(m);
     }
+
+    public void deleteMovie(Movie id) throws Exception {
+        movieManager.deleteMovie(id);
+    }
 }

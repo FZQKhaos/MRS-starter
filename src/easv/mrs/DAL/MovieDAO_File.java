@@ -89,16 +89,6 @@ public class MovieDAO_File implements IMovieDataAccess {
 
     @Override
     public void deleteMovie(Movie movie) throws Exception {
-        List<String> movies = Files.readAllLines(Path.of(MOVIES_FILE));
-
-        try {
-            int movieId = movie.getId();
-            if (movieId == movie.getId())
-
-            movies.remove(movie);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
 
     }
 

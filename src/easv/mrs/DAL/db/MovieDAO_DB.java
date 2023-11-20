@@ -1,8 +1,10 @@
 package easv.mrs.DAL.db;
 
+// Project imports
 import easv.mrs.BE.Movie;
 import easv.mrs.DAL.IMovieDataAccess;
 
+// Java imports
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
@@ -47,6 +49,7 @@ public class MovieDAO_DB implements IMovieDataAccess {
     }
 
     public Movie createMovie(Movie movie) throws Exception {
+        // SQL Command
         String sql = "INSERT INTO dbo.Movie (Title,Year) VALUES (?,?);";
 
         try (Connection conn = databaseConnector.getConnection()) {

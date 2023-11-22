@@ -5,9 +5,8 @@ import easv.mrs.GUI.Model.MovieModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -15,8 +14,21 @@ import java.util.ResourceBundle;
 public class MovieViewController implements Initializable {
 
 
-    public TextField txtMovieSearch;
-    public ListView<Movie> lstMovies;
+    @FXML
+    private TextField txtMovieSearch;
+
+    @FXML
+    private ListView<Movie> lstMovies;
+
+    @FXML
+    private TableView<Movie> tblMovies;
+
+    @FXML
+    private TableColumn<Movie, String> colTitle;
+
+    @FXML
+    private TableColumn<Movie, Integer> colYear;
+
     @FXML
     private TextField txtTitle, txtYear;
 
@@ -36,7 +48,21 @@ public class MovieViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
+        // TableView columns + BE getters
+        colTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
+        colYear.setCellValueFactory(new PropertyValueFactory<>("year"));
+
         lstMovies.setItems(movieModel.getObservableMovies());
+        tblMovies.setItems(movieModel.getObservableMovies());
+
+        //tblMovies.getSelectionModel().getSelectedItem();
+        tblMovies.getSelectionModel().selectedItemProperty().addListener
+                ((observable, oldValue, newValue) -> {
+                    if (newValue != null) {
+                        txtTitle.setText(newValue.getTitle());
+                        txtYear.setText(String.valueOf(newValue.getYear()));
+                    }
+        });
 
         txtMovieSearch.textProperty().addListener((observableValue, oldValue, newValue) -> {
             try {
@@ -75,5 +101,34 @@ public class MovieViewController implements Initializable {
 
     public void onActionDeleteMovie(ActionEvent actionEvent) throws Exception {
 
+        Movie selectedMovie = tblMovies.getSelectionModel().getSelectedItem();
+
+        if (selectedMovie != null){
+            movieModel.deleteMovie(selectedMovie);
+        }
+
+    }
+
+    public void onActionUpdateMovie(ActionEvent event) {
+        String title = txtTitle.getText();
+        int year = Integer.parseInt(txtYear.getText());
+        Movie selectedMovie = tblMovies.getSelectionModel().getSelectedItem();
+        try {
+            if (selectedMovie != null){
+                selectedMovie.setTitle(title);
+                selectedMovie.setYear(year);
+
+                //DB Chain
+                movieModel.updateMovie(selectedMovie);
+                tblMovies.refresh();
+                lstMovies.refresh();
+
+                txtTitle.clear();
+                txtYear.clear();
+            }
+        } catch (Exception e) {
+            displayError(e);
+            e.printStackTrace();
+        }
     }
 }

@@ -35,7 +35,11 @@ public class MovieManager {
        return movieDAO.createMovie(newMovie);
     }
 
-    public void deleteMovie(Movie movie) throws Exception {
+    public void deleteMovie(Movie selectedMovie) throws Exception {
+        movieDAO.deleteMovie(selectedMovie);
+    }
 
+    public void updateMovie(Movie selectedMovie) throws Exception {
+        movieDAO.updateMovie(selectedMovie);
     }
 }

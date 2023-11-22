@@ -36,7 +36,17 @@ public class MovieModel {
             moviesToBeViewed.add(m);
     }
 
-    public void deleteMovie(Movie movie) throws Exception {
+    public void deleteMovie(Movie selectedMovie) throws Exception {
+            movieManager.deleteMovie(selectedMovie);
+            moviesToBeViewed.remove(selectedMovie);
+    }
 
+    public void updateMovie(Movie selectedMovie) throws Exception {
+        movieManager.updateMovie(selectedMovie);
+        /*
+        Movie m = moviesToBeViewed.get(moviesToBeViewed.indexOf(selectedMovie));
+        m.setTitle(selectedMovie.getTitle());
+        m.setYear(selectedMovie.getYear());
+        */
     }
 }

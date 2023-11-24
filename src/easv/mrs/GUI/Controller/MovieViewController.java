@@ -13,6 +13,8 @@ import java.util.ResourceBundle;
 
 public class MovieViewController implements Initializable {
 
+    @FXML
+    private Button btnUpdate;
 
     @FXML
     private TextField txtMovieSearch;
@@ -61,6 +63,12 @@ public class MovieViewController implements Initializable {
                     if (newValue != null) {
                         txtTitle.setText(newValue.getTitle());
                         txtYear.setText(String.valueOf(newValue.getYear()));
+
+                        btnUpdate.setDisable(false);
+                    } else {
+                        txtTitle.clear();
+                        txtYear.clear();
+                        btnUpdate.setDisable(true);
                     }
         });
 
@@ -85,14 +93,15 @@ public class MovieViewController implements Initializable {
 
 
     public void onActionCreateNewMovie(ActionEvent actionEvent) {
-
+        // get data from ui
+        if (txtTitle.getText().isEmpty() || txtYear.getText().isEmpty()){
+            return;
+        }
         String title = txtTitle.getText();
         int year = Integer.parseInt(txtYear.getText());
-
-        Movie newMovie = new Movie(-1, year, title);
-
+        
         try {
-            movieModel.createNewMovie(newMovie);
+            movieModel.createNewMovie(new Movie(year, title));
         } catch (Exception e) {
             displayError(e);
             e.printStackTrace();

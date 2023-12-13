@@ -56,6 +56,7 @@ public class MovieDAO_DB implements IMovieDataAccess {
              PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
         ) {
 
+
             // Bind parameters
             stmt.setString(1,movie.getTitle());
             stmt.setInt(2, movie.getYear());
